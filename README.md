@@ -6,7 +6,8 @@ Instaclone Front-End
 
 ## Set-Up
 
-- [ ] Router
-- [ ] Authentication
+- [x] Router
+- [x] Authentication
 - [ ] Architecture
 - [ ] Styles
+- [ ] Log In
