@@ -8,6 +8,6 @@ Instaclone Front-End
 
 - [x] Router
 - [x] Authentication
-- [ ] Architecture
-- [ ] Styles
-- [ ] Log In
+- [x] Architecture
+- [x] Styles
+- [ ] Log In / Sign Up
