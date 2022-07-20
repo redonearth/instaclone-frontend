@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { darkModeVar, isLoggedInVar } from './apollo';
 import Home from './screens/Home';
 import Login from './screens/Login';
+import Signup from './screens/Signup';
 import { GlobalStyles, darkTheme, lightTheme } from './styles';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={isLoggedIn ? <Home /> : <Login />} />
+          {!isLoggedIn && <Route path="/signup" element={<Signup />} />}
         </Routes>
       </Router>
     </ThemeProvider>

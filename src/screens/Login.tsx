@@ -3,8 +3,8 @@ import {
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import { darkModeVar, isLoggedInVar } from '../apollo';
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const WhiteBox = styled.div`
   background-color: white;
-  border: 1px solid rgb(219, 219, 219);
+  border: 1px solid ${(props) => props.theme.borderColor};
   width: 100%;
 `;
 
@@ -42,7 +42,7 @@ const Input = styled.input`
   border-radius: 3px;
   padding: 7px;
   background-color: #fafafa;
-  border: 0.5px solid rgb(219, 219, 219);
+  border: 0.5px solid ${(props) => props.theme.borderColor};
   margin-top: 5px;
   box-sizing: border-box;
   &::placeholder {
@@ -55,7 +55,7 @@ const Button = styled.input`
   border: none;
   border-radius: 3px;
   margin-top: 12px;
-  background-color: #0095f6;
+  background-color: ${(props) => props.theme.accentColor};
   color: white;
   text-align: center;
   padding: 8px 0px;
@@ -66,8 +66,9 @@ const BottomBox = styled(WhiteBox)`
   padding: 20px 0px;
   text-align: center;
   a {
+    margin-left: 5px;
     font-weight: 700;
-    color: #0095f6;
+    color: ${(props) => props.theme.accentColor};
   }
 `;
 
@@ -85,11 +86,11 @@ const Separator = styled.div`
   div {
     flex: 1;
     height: 1px;
-    background-color: rgb(219, 219, 219);
+    background-color: ${(props) => props.theme.borderColor};
   }
   span {
     padding: 0px 10px;
-    color: rgb(219, 219, 219);
+    color: ${(props) => props.theme.borderColor};
   }
 `;
 
@@ -132,7 +133,8 @@ function Login() {
           <ForgotPassword>비밀번호를 잊으셨나요?</ForgotPassword>
         </TopBox>
         <BottomBox>
-          <span>계정이 없으신가요?</span> <a href="#">가입하기</a>
+          <span>계정이 없으신가요?</span>
+          <Link to="/signup">가입하기</Link>
         </BottomBox>
       </Wrapper>
     </Container>

@@ -2,8 +2,8 @@ import { createGlobalStyle, DefaultTheme } from 'styled-components';
 import reset from 'styled-reset';
 
 export const lightTheme: DefaultTheme = {
-  bgColor: '#fafafa',
-  fontColor: '#2c2c2c',
+  accentColor: '#0095f6',
+  borderColor: 'rgb(219, 219, 219)',
 };
 
 export const darkTheme: DefaultTheme = {
