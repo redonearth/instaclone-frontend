@@ -34,28 +34,32 @@ const TopBox = styled(WhiteBox)`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    input {
-      width: 100%;
-      border-radius: 3px;
-      padding: 7px;
-      background-color: #fafafa;
-      border: 0.5px solid rgb(219, 219, 219);
-      margin-top: 5px;
-      box-sizing: border-box;
-      &::placeholder {
-        font-size: 12px;
-      }
-      &:last-child {
-        border: none;
-        margin-top: 12px;
-        background-color: #0095f6;
-        color: white;
-        text-align: center;
-        padding: 8px 0px;
-        font-weight: 700;
-      }
-    }
   }
+`;
+
+const Input = styled.input`
+  width: 100%;
+  border-radius: 3px;
+  padding: 7px;
+  background-color: #fafafa;
+  border: 0.5px solid rgb(219, 219, 219);
+  margin-top: 5px;
+  box-sizing: border-box;
+  &::placeholder {
+    font-size: 12px;
+  }
+`;
+
+const Button = styled.input`
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  margin-top: 12px;
+  background-color: #0095f6;
+  color: white;
+  text-align: center;
+  padding: 8px 0px;
+  font-weight: 700;
 `;
 
 const BottomBox = styled(WhiteBox)`
@@ -73,28 +77,34 @@ const Wrapper = styled.div`
 `;
 
 const Separator = styled.div`
-  margin: 20px 0px 30px 0px;
+  margin: 18px 40px;
   display: flex;
   justify-content: center;
   width: 100%;
   align-items: center;
   div {
-    width: 100%;
-    height: 2px;
+    flex: 1;
+    height: 1px;
     background-color: rgb(219, 219, 219);
   }
   span {
-    margin: 0px 10px;
+    padding: 0px 10px;
     color: rgb(219, 219, 219);
   }
 `;
 
 const FacebookLogin = styled.div`
   color: #385285;
+  padding-block: 8px;
   span {
     margin-left: 5px;
     font-weight: 700;
   }
+`;
+
+const ForgotPassword = styled.span`
+  margin-top: 12px;
+  font-size: 12px;
 `;
 
 function Login() {
@@ -105,11 +115,10 @@ function Login() {
           <div>
             <FontAwesomeIcon icon={faInstagram} size={'3x'} />
           </div>
-          <h1>Instagram</h1>
           <form>
-            <input type="text" placeholder="사용자 이름" />
-            <input type="text" placeholder="비밀번호" />
-            <input type="submit" placeholder="로그인" />
+            <Input type="text" placeholder="사용자 이름" />
+            <Input type="text" placeholder="비밀번호" />
+            <Button type="submit" value="로그인" />
           </form>
           <Separator>
             <div />
@@ -120,7 +129,7 @@ function Login() {
             <FontAwesomeIcon icon={faFacebookSquare} />
             <span>Facebook으로 로그인</span>
           </FacebookLogin>
-          <span>비밀번호를 잊으셨나요?</span>
+          <ForgotPassword>비밀번호를 잊으셨나요?</ForgotPassword>
         </TopBox>
         <BottomBox>
           <span>계정이 없으신가요?</span> <a href="#">가입하기</a>
