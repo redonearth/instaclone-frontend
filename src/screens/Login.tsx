@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 import BottomBox from '../components/auth/BottomBox';
 import AuthLayout from '../components/auth/Container';
+import HeaderContainer from '../components/auth/HeaderContainer';
 import FormBox from '../components/auth/FormBox';
 import Input from '../components/auth/Input';
 import Separator from '../components/auth/Separator';
@@ -21,18 +22,18 @@ const FacebookLogin = styled.div`
   }
 `;
 
-const ForgotPassword = styled.span`
+/* const ForgotPassword = styled.span`
   margin-top: 12px;
   font-size: 12px;
-`;
+`; */
 
 function Login() {
   return (
     <AuthLayout>
       <FormBox>
-        <div>
+        <HeaderContainer>
           <FontAwesomeIcon icon={faInstagram} size={'3x'} />
-        </div>
+        </HeaderContainer>
         <form>
           <Input placeholder="사용자 이름" />
           <Input placeholder="비밀번호" />
@@ -43,7 +44,7 @@ function Login() {
           <FontAwesomeIcon icon={faFacebookSquare} />
           <span>Facebook으로 로그인</span>
         </FacebookLogin>
-        <ForgotPassword>비밀번호를 잊으셨나요?</ForgotPassword>
+        {/* <ForgotPassword>비밀번호를 잊으셨나요?</ForgotPassword> */}
       </FormBox>
       <BottomBox
         cta="계정이 없으신가요?"
