@@ -5,6 +5,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import routes from '../routes';
 
 const Container = styled.div`
   display: flex;
@@ -134,7 +135,7 @@ function Login() {
         </TopBox>
         <BottomBox>
           <span>계정이 없으신가요?</span>
-          <Link to="/signup">가입하기</Link>
+          <Link to={routes.signup}>가입하기</Link>
         </BottomBox>
       </Wrapper>
     </Container>
