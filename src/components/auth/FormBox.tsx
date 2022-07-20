@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
-import { BaseBox } from '../shared';
+import { BaseBox } from '../sharedStyles';
 
 interface IFormBoxProps {
   children: ReactNode;

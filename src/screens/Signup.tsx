@@ -7,7 +7,7 @@ import HeaderContainer from '../components/auth/HeaderContainer';
 import FormBox from '../components/auth/FormBox';
 import Input from '../components/auth/Input';
 import SubmitButton from '../components/auth/SubmitButton';
-import { FatLink } from '../components/shared';
+import { FatLink } from '../components/sharedStyles';
 import routes from '../routes';
 import PageTitle from '../components/PageTitle';
 
