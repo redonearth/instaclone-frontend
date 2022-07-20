@@ -12,6 +12,7 @@ import Input from '../components/auth/Input';
 import Separator from '../components/auth/Separator';
 import SubmitButton from '../components/auth/SubmitButton';
 import routes from '../routes';
+import PageTitle from '../components/PageTitle';
 
 const FacebookLogin = styled.div`
   color: #385285;
@@ -30,6 +31,7 @@ const FacebookLogin = styled.div`
 function Login() {
   return (
     <AuthLayout>
+      <PageTitle title="로그인" />
       <FormBox>
         <HeaderContainer>
           <FontAwesomeIcon icon={faInstagram} size={'3x'} />

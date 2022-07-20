@@ -9,6 +9,7 @@ import Input from '../components/auth/Input';
 import SubmitButton from '../components/auth/SubmitButton';
 import { FatLink } from '../components/shared';
 import routes from '../routes';
+import PageTitle from '../components/PageTitle';
 
 const Subtitle = styled(FatLink)`
   font-size: 17px;
@@ -19,6 +20,7 @@ const Subtitle = styled(FatLink)`
 function Signup() {
   return (
     <AuthLayout>
+      <PageTitle title="가입" />
       <FormBox>
         <HeaderContainer>
           <FontAwesomeIcon icon={faInstagram} size={'3x'} />
