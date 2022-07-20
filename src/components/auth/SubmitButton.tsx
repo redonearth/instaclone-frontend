@@ -18,7 +18,7 @@ const SButton = styled.input`
 `;
 
 function SubmitButton({ value }: ISubmitButton) {
-  return <SButton value={value} />;
+  return <SButton type="submit" value={value} />;
 }
 
 export default SubmitButton;
