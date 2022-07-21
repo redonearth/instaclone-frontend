@@ -1,11 +1,6 @@
 import styled from 'styled-components';
 
-interface ISubmitButton {
-  value: string;
-}
-
-const SButton = styled.input`
-  cursor: pointer;
+const SubmitButton = styled.input`
   width: 100%;
   border: none;
   border-radius: 3px;
@@ -15,10 +10,8 @@ const SButton = styled.input`
   text-align: center;
   padding: 8px 0px;
   font-weight: 700;
+  opacity: ${(props) => (props.disabled ? '0.4' : '1')};
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 `;
-
-function SubmitButton({ value }: ISubmitButton) {
-  return <SButton type="submit" value={value} />;
-}
 
 export default SubmitButton;

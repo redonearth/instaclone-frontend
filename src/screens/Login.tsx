@@ -13,6 +13,13 @@ import Separator from '../components/auth/Separator';
 import SubmitButton from '../components/auth/SubmitButton';
 import routes from '../routes';
 import PageTitle from '../components/PageTitle';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import FormError from '../components/auth/FormError';
+
+interface IFormData {
+  username: string;
+  password: string;
+}
 
 const FacebookLogin = styled.div`
   color: #385285;
@@ -29,6 +36,16 @@ const FacebookLogin = styled.div`
 `; */
 
 function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, errors },
+  } = useForm<IFormData>({
+    mode: 'onBlur',
+  });
+  const onSubmitValid: SubmitHandler<IFormData> = () => {
+    // console.log(isValid);
+  };
   return (
     <AuthLayout>
       <PageTitle title="로그인" />
@@ -36,10 +53,36 @@ function Login() {
         <HeaderContainer>
           <FontAwesomeIcon icon={faInstagram} size={'3x'} />
         </HeaderContainer>
-        <form>
-          <Input placeholder="사용자 이름" />
-          <Input placeholder="비밀번호" />
-          <SubmitButton value="로그인" />
+        <form onSubmit={handleSubmit(onSubmitValid)}>
+          <Input
+            {...register('username', {
+              required: '사용자 이름은 필수입니다.',
+              minLength: {
+                value: 5,
+                message: '사용자 이름은 5글자 이상이어야 합니다.',
+              },
+              pattern: {
+                value: /^[a-zA-Z0-9]{1,15}$/g,
+                message:
+                  '한글, 특수문자를 제외한 1~15자 이내 영문만 사용 가능합니다.',
+              },
+            })}
+            name="username"
+            placeholder="사용자 이름"
+            hasError={Boolean(errors.username?.message)}
+          />
+          <FormError message={errors.username?.message} />
+          <Input
+            {...register('password', {
+              required: '비밀번호는 필수입니다.',
+            })}
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+            hasError={Boolean(errors.password?.message)}
+          />
+          <FormError message={errors.password?.message} />
+          <SubmitButton type="submit" value="로그인" disabled={!isValid} />
         </form>
         <Separator />
         <FacebookLogin>

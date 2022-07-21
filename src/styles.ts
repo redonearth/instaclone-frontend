@@ -4,6 +4,7 @@ import reset from 'styled-reset';
 export const lightTheme: DefaultTheme = {
   accentColor: '#0095f6',
   borderColor: 'rgb(219, 219, 219)',
+  focusColor: 'rgb(38, 38, 38)',
 };
 
 export const darkTheme: DefaultTheme = {
@@ -23,7 +24,7 @@ export const GlobalStyles: any = createGlobalStyle`
     background-color: ${(props) => props.theme.bgColor};
     font-size: 14px;
     font-family: 'Noto Sans KR', sans-serif;
-    color: rgb(38, 38, 38);
+    color: ${(props) => props.theme.focusColor};
   }
   a {
     text-decoration: none;

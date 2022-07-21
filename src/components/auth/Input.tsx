@@ -1,25 +1,20 @@
 import styled from 'styled-components';
 
-interface IInputProps {
-  type?: string;
-  placeholder: string;
-}
-
-const SInput = styled.input`
+const Input = styled.input<{ hasError?: boolean }>`
   width: 100%;
   border-radius: 3px;
   padding: 7px;
   background-color: #fafafa;
-  border: 0.5px solid ${(props) => props.theme.borderColor};
+  border: 0.5px solid
+    ${(props) => (props.hasError ? 'tomato' : props.theme.borderColor)};
   margin-top: 5px;
   box-sizing: border-box;
   &::placeholder {
     font-size: 12px;
   }
+  &:focus {
+    border-color: ${(props) => props.theme.focusColor};
+  }
 `;
-
-function Input({ type = 'text', placeholder }: IInputProps) {
-  return <SInput type={type} placeholder={placeholder} />;
-}
 
 export default Input;
