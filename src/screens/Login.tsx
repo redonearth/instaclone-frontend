@@ -75,7 +75,7 @@ function Login() {
   });
   const onSubmitValid: SubmitHandler<IFormData> = () => {
     if (loading) return;
-    const { username, password } = getValues();
+    const { username, password }: IFormData = getValues();
     login({
       variables: {
         username,

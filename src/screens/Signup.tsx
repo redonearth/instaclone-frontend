@@ -10,6 +10,18 @@ import SubmitButton from '../components/auth/SubmitButton';
 import { FatLink } from '../components/sharedStyles';
 import routes from '../routes';
 import PageTitle from '../components/PageTitle';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { gql, useMutation } from '@apollo/client';
+import FormError from '../components/auth/FormError';
+import { useNavigate } from 'react-router-dom';
+
+interface IFormData {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+  result?: string;
+}
 
 const Subtitle = styled(FatLink)`
   font-size: 17px;
@@ -17,7 +29,58 @@ const Subtitle = styled(FatLink)`
   margin-top: 10px;
 `;
 
+const CREATE_ACCOUNT_MUTATION = gql`
+  mutation createAccount(
+    $name: String!
+    $username: String!
+    $email: String!
+    $password: String!
+  ) {
+    createAccount(
+      name: $name
+      username: $username
+      email: $email
+      password: $password
+    ) {
+      ok
+      error
+    }
+  }
+`;
+
 function Signup() {
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, errors },
+    getValues,
+    setError,
+  } = useForm<IFormData>({
+    mode: 'onChange',
+  });
+  const onCompleted = (data: any) => {
+    const { createAccount: ok, error } = data;
+    if (!ok) {
+      return setError('result', { message: error });
+    }
+    navigate(routes.home);
+  };
+  const [createAccount, { loading }] = useMutation(CREATE_ACCOUNT_MUTATION, {
+    onCompleted,
+  });
+  const onSubmitValid: SubmitHandler<IFormData> = () => {
+    if (loading) return;
+    const { name, username, email, password }: IFormData = getValues();
+    createAccount({
+      variables: {
+        name,
+        username,
+        email,
+        password,
+      },
+    });
+  };
   return (
     <AuthLayout>
       <PageTitle title="가입" />
@@ -26,12 +89,40 @@ function Signup() {
           <FontAwesomeIcon icon={faInstagram} size={'3x'} />
           <Subtitle>친구들의 사진과 동영상을 보려면 가입하세요.</Subtitle>
         </HeaderContainer>
-        <form>
-          <Input placeholder="이메일 주소" />
-          <Input placeholder="성명" />
-          <Input placeholder="사용자 이름" />
-          <Input placeholder="비밀번호" />
-          <SubmitButton type="submit" value="가입" />
+        <form onSubmit={handleSubmit(onSubmitValid)}>
+          <Input
+            {...register('email', { required: '이메일은 필수입니다.' })}
+            name="email"
+            type="text"
+            placeholder="이메일 주소"
+          />
+          <FormError message={errors.email?.message} />
+          <Input
+            {...register('name', { required: '성명은 필수입니다.' })}
+            name="name"
+            type="text"
+            placeholder="성명"
+          />
+          <FormError message={errors.name?.message} />
+          <Input
+            {...register('username', { required: '사용자 이름은 필수입니다.' })}
+            name="username"
+            type="text"
+            placeholder="사용자 이름"
+          />
+          <FormError message={errors.username?.message} />
+          <Input
+            {...register('password', { required: '비밀번호는 필수입니다.' })}
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+          />
+          <FormError message={errors.password?.message} />
+          <SubmitButton
+            type="submit"
+            value={loading ? '로딩 중...' : '가입'}
+            disabled={!isValid || loading}
+          />
         </form>
       </FormBox>
       <BottomBox
