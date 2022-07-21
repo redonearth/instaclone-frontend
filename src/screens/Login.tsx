@@ -15,10 +15,13 @@ import routes from '../routes';
 import PageTitle from '../components/PageTitle';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormError from '../components/auth/FormError';
+import { gql, useMutation } from '@apollo/client';
+import { logUserIn } from '../apollo';
 
 interface IFormData {
   username: string;
   password: string;
+  result?: string;
 }
 
 const FacebookLogin = styled.div`
@@ -35,16 +38,53 @@ const FacebookLogin = styled.div`
   font-size: 12px;
 `; */
 
+const LOGIN_MUTATION = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      ok
+      token
+      error
+    }
+  }
+`;
+
 function Login() {
   const {
     register,
     handleSubmit,
     formState: { isValid, errors },
+    getValues,
+    setError,
+    clearErrors,
   } = useForm<IFormData>({
     mode: 'onBlur',
   });
+  const onCompleted = (data: any) => {
+    const {
+      login: { ok, error, token },
+    } = data;
+    if (!ok) {
+      return setError('result', { message: error });
+    }
+    if (token) {
+      logUserIn(token);
+    }
+  };
+  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted,
+  });
   const onSubmitValid: SubmitHandler<IFormData> = () => {
-    // console.log(isValid);
+    if (loading) return;
+    const { username, password } = getValues();
+    login({
+      variables: {
+        username,
+        password,
+      },
+    });
+  };
+  const clearLoginError = () => {
+    clearErrors('result');
   };
   return (
     <AuthLayout>
@@ -66,6 +106,7 @@ function Login() {
                 message:
                   '한글, 특수문자를 제외한 1~15자 이내 영문만 사용 가능합니다.',
               },
+              onChange: clearLoginError,
             })}
             name="username"
             placeholder="사용자 이름"
@@ -75,6 +116,7 @@ function Login() {
           <Input
             {...register('password', {
               required: '비밀번호는 필수입니다.',
+              onChange: clearLoginError,
             })}
             name="password"
             type="password"
@@ -82,7 +124,11 @@ function Login() {
             hasError={Boolean(errors.password?.message)}
           />
           <FormError message={errors.password?.message} />
-          <SubmitButton type="submit" value="로그인" disabled={!isValid} />
+          <SubmitButton
+            type="submit"
+            value={loading ? '로딩 중...' : '로그인'}
+            disabled={!isValid || loading}
+          />
         </form>
         <Separator />
         <FacebookLogin>
@@ -90,6 +136,7 @@ function Login() {
           <span>Facebook으로 로그인</span>
         </FacebookLogin>
         {/* <ForgotPassword>비밀번호를 잊으셨나요?</ForgotPassword> */}
+        <FormError message={errors.result?.message} />
       </FormBox>
       <BottomBox
         cta="계정이 없으신가요?"
