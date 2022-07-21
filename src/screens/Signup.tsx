@@ -64,7 +64,14 @@ function Signup() {
     if (!ok) {
       return setError('result', { message: error });
     }
-    navigate(routes.home);
+    const { username, password }: IFormData = getValues();
+    navigate(routes.home, {
+      state: {
+        username,
+        password,
+        message: '계정이 생성되었습니다. 로그인 해주세요!',
+      },
+    });
   };
   const [createAccount, { loading }] = useMutation(CREATE_ACCOUNT_MUTATION, {
     onCompleted,

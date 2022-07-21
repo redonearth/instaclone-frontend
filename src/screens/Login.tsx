@@ -17,11 +17,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import FormError from '../components/auth/FormError';
 import { gql, useMutation } from '@apollo/client';
 import { logUserIn } from '../apollo';
+import { useLocation } from 'react-router-dom';
+import Notification from '../components/Notification';
 
 interface IFormData {
   username: string;
   password: string;
   result?: string;
+}
+
+interface ILoginState {
+  username?: string;
+  password?: string;
+  message?: string;
 }
 
 const FacebookLogin = styled.div`
@@ -49,6 +57,8 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
+  const location = useLocation();
+  const state = location.state as ILoginState | null;
   const {
     register,
     handleSubmit,
@@ -58,6 +68,10 @@ function Login() {
     clearErrors,
   } = useForm<IFormData>({
     mode: 'onBlur',
+    defaultValues: {
+      username: state?.username,
+      password: state?.password,
+    },
   });
   const onCompleted = (data: any) => {
     const {
@@ -93,6 +107,7 @@ function Login() {
         <HeaderContainer>
           <FontAwesomeIcon icon={faInstagram} size={'3x'} />
         </HeaderContainer>
+        {state?.message && <Notification message={state.message} />}
         <form onSubmit={handleSubmit(onSubmitValid)}>
           <Input
             {...register('username', {
