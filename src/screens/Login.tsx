@@ -26,11 +26,29 @@ interface IFormData {
   result?: string;
 }
 
+interface ILoginMutation {
+  login: {
+    ok: boolean;
+    error?: string;
+    token?: string | null;
+  };
+}
+
 interface ILoginState {
   username?: string;
   password?: string;
   message?: string;
 }
+
+const LOGIN_MUTATION = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      ok
+      token
+      error
+    }
+  }
+`;
 
 const FacebookLogin = styled.div`
   color: #385285;
@@ -45,16 +63,6 @@ const FacebookLogin = styled.div`
   margin-top: 12px;
   font-size: 12px;
 `; */
-
-const LOGIN_MUTATION = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      ok
-      token
-      error
-    }
-  }
-`;
 
 function Login() {
   const location = useLocation();
@@ -73,7 +81,7 @@ function Login() {
       password: state?.password,
     },
   });
-  const onCompleted = (data: any) => {
+  const onCompleted = (data: ILoginMutation) => {
     const {
       login: { ok, error, token },
     } = data;

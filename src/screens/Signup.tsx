@@ -23,11 +23,12 @@ interface IFormData {
   result?: string;
 }
 
-const Subtitle = styled(FatLink)`
-  font-size: 17px;
-  text-align: center;
-  margin-top: 10px;
-`;
+interface ICreateAccountMutation {
+  createAccount: {
+    ok: boolean;
+    error?: string;
+  };
+}
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount(
@@ -48,6 +49,12 @@ const CREATE_ACCOUNT_MUTATION = gql`
   }
 `;
 
+const Subtitle = styled(FatLink)`
+  font-size: 17px;
+  text-align: center;
+  margin-top: 10px;
+`;
+
 function Signup() {
   const navigate = useNavigate();
   const {
@@ -59,8 +66,10 @@ function Signup() {
   } = useForm<IFormData>({
     mode: 'onChange',
   });
-  const onCompleted = (data: any) => {
-    const { createAccount: ok, error } = data;
+  const onCompleted = (data: ICreateAccountMutation) => {
+    const {
+      createAccount: { ok, error },
+    } = data;
     if (!ok) {
       return setError('result', { message: error });
     }
