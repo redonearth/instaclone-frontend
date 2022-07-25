@@ -1,6 +1,6 @@
 import { useReactiveVar } from '@apollo/client';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faCompass, faUser } from '@fortawesome/free-regular-svg-icons';
+import { faCompass } from '@fortawesome/free-regular-svg-icons';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { isLoggedInVar } from '../apollo';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import routes from '../routes';
+import Avatar from './Avatar';
 
 const SHeader = styled.header`
   width: 100%;
@@ -41,28 +42,33 @@ const Button = styled.span`
   font-weight: bold;
 `;
 
+const IconsContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 function Header() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
-  const loggedInUser = useLoggedInUser();
+  const { data } = useLoggedInUser();
   return (
     <SHeader>
       <Wrapper>
         <Column>
-          <FontAwesomeIcon icon={faInstagram} size="2x" />
+          <FontAwesomeIcon icon={faInstagram} size="3x" />
         </Column>
         <Column>
           {isLoggedIn ? (
-            <>
+            <IconsContainer>
               <Icon>
-                <FontAwesomeIcon icon={faHome} size="lg" />
+                <FontAwesomeIcon icon={faHome} size="2x" />
               </Icon>
               <Icon>
-                <FontAwesomeIcon icon={faCompass} size="lg" />
+                <FontAwesomeIcon icon={faCompass} size="2x" />
               </Icon>
               <Icon>
-                <FontAwesomeIcon icon={faUser} size="lg" />
+                <Avatar url={data?.seeMe?.avatar} />
               </Icon>
-            </>
+            </IconsContainer>
           ) : (
             <Link to={routes.home}>
               <Button>로그인</Button>

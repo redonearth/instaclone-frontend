@@ -24,12 +24,12 @@ function useLoggedInUser() {
   const { data } = useQuery<ISeeMeQuery>(SEE_ME_QUERY, {
     skip: !isLoggedIn,
   });
-  console.log(data);
   useEffect(() => {
     if (data?.seeMe === null) {
       isLoggedInVar(false);
     }
   }, [data]);
+  return { data };
 }
 
 export default useLoggedInUser;
